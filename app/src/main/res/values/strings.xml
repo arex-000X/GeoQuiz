@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">GeoQuiz</string>
+    <string name="question_australia">Канберра - столица Австралии?</string>
+    <string name="button_true">Да</string>
+    <string name="button_false">Нет</string>
+    <string name="correct">Правильно</string>
+    <string name="in_correct">Не правильно</string>
+    <string name="button_next">Далее</string>
+</resources>

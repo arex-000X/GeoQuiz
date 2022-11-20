@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GeoQuiz</string>
+    <string name="question_australia" translatable="false">Canberra the capital of Australia?</string>
+    <string name="button_true">Yes</string>
+    <string name="button_false">No</string>
+    <string name="correct">Correct</string>
+    <string name="in_correct">Incorrect</string>
+    <string name="button_next">Next</string>
+</resources>
