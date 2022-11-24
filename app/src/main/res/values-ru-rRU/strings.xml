@@ -7,4 +7,9 @@
     <string name="correct">Правильно</string>
     <string name="in_correct">Не правильно</string>
     <string name="button_next">Далее</string>
+    <string name="question_oceans">Тихий океан больше Атлантического океана</string>
+    <string name="question_mideast">Суэцкий канал соединяет Красное море и Индийский океан</string>
+    <string name="question_africa">Исток реки Нил находится в Египте</string>
+    <string name="question_americas">Река Амазонка - самая длинная река в Северной и Южной Америке</string>
+    <string name="question_asia">Байкал - самое древнее и глубокое пресноводное озеро в мире</string>
 </resources>

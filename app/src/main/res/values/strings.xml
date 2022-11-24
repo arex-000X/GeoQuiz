@@ -1,9 +1,14 @@
 <resources>
     <string name="app_name">GeoQuiz</string>
     <string name="question_australia">Канберра - столица Австралии?</string>
-    <string name="button_true">Да</string>
-    <string name="button_false">Нет</string>
-    <string name="correct">Правильно</string>
-    <string name="in_correct">Не правильно</string>
-    <string name="button_next">Далее</string>
+    <string name="question_oceans">The Pacific Ocean if larger than the Atlantic Ocean</string>
+    <string name="question_mideast">The Suez Canal connects the Red Sea and the Indian Ocean</string>
+    <string name="question_africa">The source of the Nile Rivel is in Egypt</string>
+    <string name="question_americas">The Amazon River is the longest river in the Americas</string>
+    <string name="question_asia">Lake Baikal is the wprld oldest and deepest freshgwater lake</string>
+    <string name="button_true">Yes</string>
+    <string name="button_false">No</string>
+    <string name="correct">Correct</string>
+    <string name="in_correct">Incorrect</string>
+    <string name="button_next">Next</string>
 </resources>
