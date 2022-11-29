@@ -1,15 +1,17 @@
 package com.karaew.learning.geoquiz
 
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Gravity
 import android.widget.Button
+import android.widget.ImageButton
+import android.widget.TextView
 import android.widget.Toast
 
 private lateinit var buttonTrue: Button
 private lateinit var buttonFalse: Button
-
+private lateinit var buttonNext: ImageButton
+private lateinit var buttonPrev: ImageButton
+private lateinit var questionTextView: TextView
 private val questionBank = listOf(
     Question(R.string.question_australia, true),
     Question(R.string.question_oceans, true),
@@ -27,16 +29,62 @@ class MainActivity : AppCompatActivity() {
 
         buttonTrue = findViewById(R.id.button_true)
         buttonFalse = findViewById(R.id.button_false)
-
+        buttonNext = findViewById(R.id.button_next)
+        buttonPrev = findViewById(R.id.button_prev)
+        questionTextView = findViewById(R.id.question_text_view)
+        updateQuestion()
         buttonTrue.setOnClickListener {
-            val toast = Toast.makeText(this, R.string.correct, Toast.LENGTH_LONG)
-            toast.show()
+            checkAnswer(true)
         }
         buttonFalse.setOnClickListener {
-            val toast = Toast.makeText(this, R.string.in_correct, Toast.LENGTH_LONG)
-            toast.show()
+            checkAnswer(false)
+        }
+        buttonNext.setOnClickListener {
+            updateQuestion()
+        }
+        buttonPrev.setOnClickListener {
+            questionBack()
+        }
+        questionTextView.setOnClickListener {
+
+            updateQuestion()
         }
 
 
     }
+
+    private fun checkAnswer(answer: Boolean) {
+        val correctAnswer = questionBank[currentIndex].answer
+
+        val messageResId = when (answer) {
+            correctAnswer -> {
+                R.string.correct
+            }
+            else -> {
+                R.string.in_correct
+            }
+        }
+        Toast.makeText(this, messageResId, Toast.LENGTH_LONG).show()
+
+    }
+
 }
+
+private fun questionBack() {
+    currentIndex = (currentIndex - 1) % questionBank.size
+    val questionTextViewRes = questionBank[currentIndex].textResId
+    questionTextView.setText(questionTextViewRes)
+    if (currentIndex == 0)  currentIndex = questionBank.size
+
+}
+
+
+private fun updateQuestion() {
+    currentIndex = (currentIndex + 1) % questionBank.size
+    val questionTextViewRes = questionBank[currentIndex].textResId
+    questionTextView.setText(questionTextViewRes)
+}
+
+
+
+
