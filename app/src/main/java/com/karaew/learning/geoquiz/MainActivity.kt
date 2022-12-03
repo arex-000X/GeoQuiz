@@ -2,11 +2,12 @@ package com.karaew.learning.geoquiz
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
-
+private const val TAG = "MainActivity"
 private lateinit var buttonTrue: Button
 private lateinit var buttonFalse: Button
 private lateinit var buttonNext: ImageButton
@@ -23,10 +24,11 @@ private val questionBank = listOf(
 private var currentIndex = 0
 
 class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d(TAG,"onCreate(Bundle?) called")
         setContentView(R.layout.activity_main)
-
         buttonTrue = findViewById(R.id.button_true)
         buttonFalse = findViewById(R.id.button_false)
         buttonNext = findViewById(R.id.button_next)

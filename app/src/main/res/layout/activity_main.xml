@@ -23,14 +23,16 @@
             android:id="@+id/button_true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/btn_true" />
+            android:text="@string/btn_true"
+            android:drawableLeft="@drawable/ic_baseline_check_24"/>
 
 
         <Button
             android:id="@+id/button_false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/btn_false" />
+            android:text="@string/btn_false"
+            android:drawableRight="@drawable/ic_baseline_clear_24"/>
     </LinearLayout>
 
     <LinearLayout
