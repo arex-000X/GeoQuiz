@@ -55,6 +55,26 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    override fun onStart() {
+        super.onStart()
+    }
+
+    override fun onResume() {
+        super.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+    }
+    override fun onStop() {
+        super.onStop()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+    }
+
+
     private fun checkAnswer(answer: Boolean) {
         val correctAnswer = questionBank[currentIndex].answer
 
@@ -76,8 +96,6 @@ class MainActivity : AppCompatActivity() {
         if (currentIndex == 0)  currentIndex = questionBank.size
 
     }
-
-
     private fun updateQuestion() {
         currentIndex = (currentIndex + 1) % questionBank.size
         val questionTextViewRes = questionBank[currentIndex].textResId
