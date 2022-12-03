@@ -8,11 +8,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 private const val TAG = "MainActivity"
-private lateinit var buttonTrue: Button
-private lateinit var buttonFalse: Button
-private lateinit var buttonNext: ImageButton
-private lateinit var buttonPrev: ImageButton
-private lateinit var questionTextView: TextView
+
 private val questionBank = listOf(
     Question(R.string.question_australia, true),
     Question(R.string.question_oceans, true),
@@ -24,7 +20,11 @@ private val questionBank = listOf(
 private var currentIndex = 0
 
 class MainActivity : AppCompatActivity() {
-
+    private lateinit var buttonTrue: Button
+    private lateinit var buttonFalse: Button
+    private lateinit var buttonNext: ImageButton
+    private lateinit var buttonPrev: ImageButton
+    private lateinit var questionTextView: TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d(TAG,"onCreate(Bundle?) called")
@@ -69,23 +69,23 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this, messageResId, Toast.LENGTH_LONG).show()
 
     }
+    private fun questionBack() {
+        currentIndex = (currentIndex - 1) % questionBank.size
+        val questionTextViewRes = questionBank[currentIndex].textResId
+        questionTextView.setText(questionTextViewRes)
+        if (currentIndex == 0)  currentIndex = questionBank.size
 
+    }
+
+
+    private fun updateQuestion() {
+        currentIndex = (currentIndex + 1) % questionBank.size
+        val questionTextViewRes = questionBank[currentIndex].textResId
+        questionTextView.setText(questionTextViewRes)
+    }
 }
 
-private fun questionBack() {
-    currentIndex = (currentIndex - 1) % questionBank.size
-    val questionTextViewRes = questionBank[currentIndex].textResId
-    questionTextView.setText(questionTextViewRes)
-    if (currentIndex == 0)  currentIndex = questionBank.size
 
-}
-
-
-private fun updateQuestion() {
-    currentIndex = (currentIndex + 1) % questionBank.size
-    val questionTextViewRes = questionBank[currentIndex].textResId
-    questionTextView.setText(questionTextViewRes)
-}
 
 
 
