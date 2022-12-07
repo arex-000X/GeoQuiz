@@ -7,34 +7,32 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
+
 private const val TAG = "MainActivity"
 
-private val questionBank = listOf(
-    Question(R.string.question_australia, true),
-    Question(R.string.question_oceans, true),
-    Question(R.string.question_mideast, false),
-    Question(R.string.question_africa, false),
-    Question(R.string.question_americas, true),
-    Question(R.string.question_asia, true)
-)
-private var currentIndex = 0
 
 class MainActivity : AppCompatActivity() {
     private lateinit var buttonTrue: Button
     private lateinit var buttonFalse: Button
-    private lateinit var buttonNext: ImageButton
-    private lateinit var buttonPrev: ImageButton
+    private lateinit var buttonNext: Button
+    private lateinit var buttonBack: Button
     private lateinit var questionTextView: TextView
+    private val quizViewModel: QuizViewModel by lazy {
+        ViewModelProvider(this).get(QuizViewModel::class.java)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d(TAG,"onCreate(Bundle?) called")
+        Log.d(TAG, "onCreate(Bundle?) called")
         setContentView(R.layout.activity_main)
         buttonTrue = findViewById(R.id.button_true)
         buttonFalse = findViewById(R.id.button_false)
         buttonNext = findViewById(R.id.button_next)
-        buttonPrev = findViewById(R.id.button_prev)
+        buttonBack = findViewById(R.id.button_prev)
         questionTextView = findViewById(R.id.question_text_view)
-        updateQuestion()
+
+
         buttonTrue.setOnClickListener {
             checkAnswer(true)
         }
@@ -42,43 +40,20 @@ class MainActivity : AppCompatActivity() {
             checkAnswer(false)
         }
         buttonNext.setOnClickListener {
-            updateQuestion()
+            btnNext()
         }
-        buttonPrev.setOnClickListener {
-            questionBack()
+        buttonBack.setOnClickListener {
+            btnBack()
         }
         questionTextView.setOnClickListener {
-
-            updateQuestion()
+            btnNext()
         }
 
 
     }
 
-    override fun onStart() {
-        super.onStart()
-        Log.d(TAG,"onStart() called")
-    }
-    override fun onResume() {
-        super.onResume()
-        Log.d(TAG,"onResume() called")
-    }
-    override fun onPause() {
-        super.onPause()
-        Log.d(TAG," onPause() called")
-    }
-    override fun onStop() {
-        super.onStop()
-        Log.d(TAG,"onStop() called")
-    }
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d(TAG,"onDestroy() called")
-    }
-
-
     private fun checkAnswer(answer: Boolean) {
-        val correctAnswer = questionBank[currentIndex].answer
+        val correctAnswer = quizViewModel.questionAnswerViewRes
 
         val messageResId = when (answer) {
             correctAnswer -> {
@@ -91,18 +66,19 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this, messageResId, Toast.LENGTH_LONG).show()
 
     }
-    private fun questionBack() {
-        currentIndex = (currentIndex - 1) % questionBank.size
-        val questionTextViewRes = questionBank[currentIndex].textResId
-        questionTextView.setText(questionTextViewRes)
-        if (currentIndex == 0)  currentIndex = questionBank.size
 
+    private fun btnBack() {
+        quizViewModel.clickBack()
+        questionTextView.setText(quizViewModel.questionTextViewRes)
+        quizViewModel.updateCurrent()
     }
-    private fun updateQuestion() {
-        currentIndex = (currentIndex + 1) % questionBank.size
-        val questionTextViewRes = questionBank[currentIndex].textResId
-        questionTextView.setText(questionTextViewRes)
+
+    private fun btnNext() {
+        quizViewModel.clickNext()
+        questionTextView.setText(quizViewModel.questionTextViewRes)
     }
+
+
 }
 
 

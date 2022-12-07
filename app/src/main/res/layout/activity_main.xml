@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="24dp"
-        tools:text="@string/question_australia" />
+        android:text="@string/question_australia" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -40,22 +40,22 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         >
-
-        <ImageButton
+        <Button
             android:id="@+id/button_prev"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/purple_500"
-            android:padding="10dp"
-            android:src="@drawable/ic_baseline_keyboard_arrow_left_24" />
+            android:layout_gravity="bottom|left"
+            android:drawableLeft="@drawable/ic_baseline_keyboard_arrow_left_24"
+            android:text="@string/button_prev"/>
 
-        <ImageButton
+        <Button
             android:id="@+id/button_next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/purple_500"
-            android:padding="10dp"
-            android:src="@drawable/ic_baseline_keyboard_arrow_right_24" />
+            android:layout_gravity="bottom|left"
+            android:drawableRight="@drawable/ic_baseline_keyboard_arrow_right_24"
+            android:text="@string/button_next"
+            />
 
     </LinearLayout>
 
