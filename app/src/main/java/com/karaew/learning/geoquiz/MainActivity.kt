@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, "onCreate(Bundle?) called")
         setContentView(R.layout.activity_main)
 
-        val currentIndex = savedInstanceState?.getInt(KEY_INDEX,0) ?:0
+        val currentIndex = savedInstanceState?.getInt(KEY_INDEX, 0) ?: 0
         quizViewModel.currentIndex = currentIndex
         Log.d(TAG, "activity:${currentIndex}, and viewmodel:${quizViewModel.currentIndex}")
 
@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putInt(KEY_INDEX,quizViewModel.currentIndex)
+        outState.putInt(KEY_INDEX, quizViewModel.currentIndex)
     }
 
 
@@ -86,7 +86,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun btnNext() {
-        quizViewModel.clickNext()
+//      quizViewModel.clickNext()
         questionTextView.setText(quizViewModel.questionTextViewRes)
     }
 
