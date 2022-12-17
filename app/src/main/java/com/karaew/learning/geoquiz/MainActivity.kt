@@ -1,5 +1,6 @@
 package com.karaew.learning.geoquiz
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -17,6 +18,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var buttonFalse: Button
     private lateinit var buttonNext: Button
     private lateinit var buttonBack: Button
+    private lateinit var buttonCheat:Button
     private lateinit var questionTextView: TextView
     private val quizViewModel: QuizViewModel by lazy {
         ViewModelProvider(this).get(QuizViewModel::class.java)
@@ -36,6 +38,7 @@ class MainActivity : AppCompatActivity() {
         buttonFalse = findViewById(R.id.button_false)
         buttonNext = findViewById(R.id.button_next)
         buttonBack = findViewById(R.id.button_prev)
+        buttonCheat = findViewById(R.id.button_cheat)
         questionTextView = findViewById(R.id.question_text_view)
         questionTextView.setText(quizViewModel.questionTextViewRes)
 
@@ -50,6 +53,10 @@ class MainActivity : AppCompatActivity() {
         }
         buttonBack.setOnClickListener {
             btnBack()
+        }
+        buttonCheat.setOnClickListener {
+            val intent = Intent(this,CheatActivity::class.java)
+            startActivity(intent)
         }
         questionTextView.setOnClickListener {
             btnNext()
