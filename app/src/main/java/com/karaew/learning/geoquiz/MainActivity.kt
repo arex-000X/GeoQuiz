@@ -86,7 +86,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun btnNext() {
-//      quizViewModel.clickNext()
+        quizViewModel.clickNext()
         questionTextView.setText(quizViewModel.questionTextViewRes)
     }
 

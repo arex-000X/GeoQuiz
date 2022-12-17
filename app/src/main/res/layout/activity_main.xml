@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|left"
             android:drawableLeft="@drawable/ic_baseline_keyboard_arrow_left_24"
-            android:text="@string/button_prev"/>
+            android:text="@string/button_back"/>
 
         <Button
             android:id="@+id/button_next"
