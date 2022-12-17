@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 
 private const val TAG = "MainActivity"
 private const val KEY_INDEX = "INDEX"
+private const val REQUEST_CODE_CHEAT = 0
 
 class MainActivity : AppCompatActivity() {
     private lateinit var buttonTrue: Button
@@ -37,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         buttonTrue = findViewById(R.id.button_true)
         buttonFalse = findViewById(R.id.button_false)
         buttonNext = findViewById(R.id.button_next)
-        buttonBack = findViewById(R.id.button_prev)
+        buttonBack = findViewById(R.id.button_back)
         buttonCheat = findViewById(R.id.button_cheat)
         questionTextView = findViewById(R.id.question_text_view)
         questionTextView.setText(quizViewModel.questionTextViewRes)
@@ -55,8 +56,9 @@ class MainActivity : AppCompatActivity() {
             btnBack()
         }
         buttonCheat.setOnClickListener {
-            val intent = Intent(this,CheatActivity::class.java)
-            startActivity(intent)
+            val answerTrue = quizViewModel.questionAnswerViewRes
+            val intent = CheatActivity.newIntent(this@MainActivity,answerTrue)
+            startActivityForResult(intent, REQUEST_CODE_CHEAT)
         }
         questionTextView.setOnClickListener {
             btnNext()
