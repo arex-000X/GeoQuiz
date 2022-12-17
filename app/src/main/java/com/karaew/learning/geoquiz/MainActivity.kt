@@ -1,5 +1,6 @@
 package com.karaew.learning.geoquiz
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -19,7 +20,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var buttonFalse: Button
     private lateinit var buttonNext: Button
     private lateinit var buttonBack: Button
-    private lateinit var buttonCheat:Button
+    private lateinit var buttonCheat: Button
     private lateinit var questionTextView: TextView
     private val quizViewModel: QuizViewModel by lazy {
         ViewModelProvider(this).get(QuizViewModel::class.java)
@@ -57,7 +58,7 @@ class MainActivity : AppCompatActivity() {
         }
         buttonCheat.setOnClickListener {
             val answerTrue = quizViewModel.questionAnswerViewRes
-            val intent = CheatActivity.newIntent(this@MainActivity,answerTrue)
+            val intent = CheatActivity.newIntent(this@MainActivity, answerTrue)
             startActivityForResult(intent, REQUEST_CODE_CHEAT)
         }
         questionTextView.setOnClickListener {
@@ -72,17 +73,22 @@ class MainActivity : AppCompatActivity() {
         outState.putInt(KEY_INDEX, quizViewModel.currentIndex)
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode != Activity.RESULT_OK) {
+            return
+        }
+        if (resultCode == REQUEST_CODE_CHEAT) {
+            quizViewModel.isCheater = data?.getBooleanExtra(EXTRA_ANSWER_SHOW, false) ?: false
+        }
+    }
 
     private fun checkAnswer(answer: Boolean) {
         val correctAnswer = quizViewModel.questionAnswerViewRes
-
-        val messageResId = when (answer) {
-            correctAnswer -> {
-                R.string.correct
-            }
-            else -> {
-                R.string.in_correct
-            }
+        val messageResId = when {
+           quizViewModel.isCheater -> R.string.judment_toast
+            answer == correctAnswer ->R.string.correct
+            else -> R.string.in_correct
         }
         Toast.makeText(this, messageResId, Toast.LENGTH_LONG).show()
 
