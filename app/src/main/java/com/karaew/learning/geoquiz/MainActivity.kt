@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity() {
 
         val correctAnswer = quizViewModel.questionAnswerViewRes
         val messageResId = when {
-            quizViewModel.isCheater -> R.string.judment_toast
+            quizViewModel.questionStatusCheck -> R.string.judment_toast
             answer == correctAnswer -> R.string.correct
             else -> R.string.in_correct
         }
@@ -110,6 +110,10 @@ class MainActivity : AppCompatActivity() {
             if (result.resultCode == RESULT_OK) {
                 quizViewModel.isCheater =
                     result.data?.getBooleanExtra(EXTRA_ANSWER_SHOW, false) ?: false
+                quizViewModel.checkStatusCheat()
+                if (quizViewModel.questionStatusCheck == true){
+
+                }
             } else return@registerForActivityResult
         }
 }

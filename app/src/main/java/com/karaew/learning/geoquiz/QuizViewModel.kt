@@ -18,13 +18,12 @@ class QuizViewModel : ViewModel() {
     )
 
     var currentIndex = 0
-
     val questionAnswerViewRes: Boolean
         get() = questionBank[currentIndex].answer
     val questionTextViewRes: Int
         get() = questionBank[currentIndex].textResId
-    var questionStatusCheats: Boolean = false
-        get() = questionBank[currentIndex].statusCheat
+   val questionStatusCheck: Boolean
+    get() = questionBank[currentIndex].statusCheat
 
     fun clickNext() {
         currentIndex = (currentIndex + 1) % questionBank.size
@@ -40,6 +39,9 @@ class QuizViewModel : ViewModel() {
 
     fun updateCurrent() {
         if (currentIndex == 0) currentIndex = questionBank.size
+    }
+    fun checkStatusCheat(){
+        questionBank[currentIndex].statusCheat = isCheater
     }
 
 
