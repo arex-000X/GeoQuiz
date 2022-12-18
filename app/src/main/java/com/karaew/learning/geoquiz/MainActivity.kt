@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 
 private const val TAG = "MainActivity"
+private const val DEB = "onActivityResult"
 private const val KEY_INDEX = "INDEX"
 private const val REQUEST_CODE_CHEAT = 0
 
@@ -75,22 +76,23 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode != Activity.RESULT_OK) {
-            return
-        }
+        if (resultCode != Activity.RESULT_OK) return
         if (resultCode == REQUEST_CODE_CHEAT) {
             quizViewModel.isCheater = data?.getBooleanExtra(EXTRA_ANSWER_SHOW, false) ?: false
+
         }
+        Log.d(DEB, "onActivityResult -> ${quizViewModel.isCheater}")
+        Log.d(DEB, "onActivityResult -> ${REQUEST_CODE_CHEAT}")
     }
 
     private fun checkAnswer(answer: Boolean) {
         val correctAnswer = quizViewModel.questionAnswerViewRes
         val messageResId = when {
-           quizViewModel.isCheater -> R.string.judment_toast
-            answer == correctAnswer ->R.string.correct
+            quizViewModel.isCheater -> R.string.judment_toast
+            answer == correctAnswer -> R.string.correct
             else -> R.string.in_correct
         }
-        Toast.makeText(this, messageResId, Toast.LENGTH_LONG).show()
+        Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show()
 
     }
 
