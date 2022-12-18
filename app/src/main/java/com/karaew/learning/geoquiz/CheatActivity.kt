@@ -8,7 +8,8 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
-const val EXTRA_ANSWER_SHOW ="com.karaew.learning.geoquiz.answer_show"
+
+const val EXTRA_ANSWER_SHOW = "com.karaew.learning.geoquiz.answer_show"
 private const val EXTRS_ANSWER_TRUE = "com.karaew.learning.geoquiz.answer_is_true"
 
 class CheatActivity : AppCompatActivity() {
@@ -28,16 +29,20 @@ class CheatActivity : AppCompatActivity() {
                 else -> R.string.btn_false
             }
             answerTextView.setText(answerText)
-            setAnswerShowResult(true)
+            setShowAnswer(true)
         }
+
+
     }
 
-    private fun setAnswerShowResult(isAnswerShow:Boolean){
+
+    fun setShowAnswer(isAnswerShow: Boolean) {
         val data = Intent().apply {
-            putExtra(EXTRA_ANSWER_SHOW,isAnswerShow)
+            putExtra(EXTRA_ANSWER_SHOW, isAnswerShow)
         }
-        setResult(Activity.RESULT_OK,data)
+        setResult(Activity.RESULT_OK, data)
     }
+
     companion object {
         fun newIntent(packageName: Context, answerTrue: Boolean): Intent {
 
@@ -46,4 +51,5 @@ class CheatActivity : AppCompatActivity() {
             }
         }
     }
+
 }

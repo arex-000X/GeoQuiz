@@ -9,12 +9,13 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
 
 private const val TAG = "MainActivity"
-private const val DEB = "onActivityResult"
 private const val KEY_INDEX = "INDEX"
-private const val REQUEST_CODE_CHEAT = 0
 
 class MainActivity : AppCompatActivity() {
     private lateinit var buttonTrue: Button
@@ -26,6 +27,14 @@ class MainActivity : AppCompatActivity() {
     private val quizViewModel: QuizViewModel by lazy {
         ViewModelProvider(this).get(QuizViewModel::class.java)
     }
+    val launcher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+
+            if(result.resultCode == RESULT_OK){
+                quizViewModel.isCheater = result.data?.getBooleanExtra(EXTRA_ANSWER_SHOW,false) ?: false
+            } else return@registerForActivityResult
+        }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,7 +69,7 @@ class MainActivity : AppCompatActivity() {
         buttonCheat.setOnClickListener {
             val answerTrue = quizViewModel.questionAnswerViewRes
             val intent = CheatActivity.newIntent(this@MainActivity, answerTrue)
-            startActivityForResult(intent, REQUEST_CODE_CHEAT)
+            launcher.launch(intent)
         }
         questionTextView.setOnClickListener {
             btnNext()
@@ -72,17 +81,6 @@ class MainActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt(KEY_INDEX, quizViewModel.currentIndex)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode != Activity.RESULT_OK) return
-        if (resultCode == REQUEST_CODE_CHEAT) {
-            quizViewModel.isCheater = data?.getBooleanExtra(EXTRA_ANSWER_SHOW, false) ?: false
-
-        }
-        Log.d(DEB, "onActivityResult -> ${quizViewModel.isCheater}")
-        Log.d(DEB, "onActivityResult -> ${REQUEST_CODE_CHEAT}")
     }
 
     private fun checkAnswer(answer: Boolean) {
