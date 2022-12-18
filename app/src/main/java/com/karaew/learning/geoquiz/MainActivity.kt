@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider
 
 private const val TAG = "MainActivity"
 private const val KEY_INDEX = "INDEX"
+private const val KEY_CHEATER = "CHEAT"
 
 class MainActivity : AppCompatActivity() {
     private lateinit var buttonTrue: Button
@@ -36,6 +37,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val currentIndex = savedInstanceState?.getInt(KEY_INDEX, 0) ?: 0
+        val isCheater =  savedInstanceState?.getBoolean(KEY_CHEATER,false) ?:false
+        quizViewModel.isCheater = isCheater
         quizViewModel.currentIndex = currentIndex
         Log.d(TAG, "activity:${currentIndex}, and viewmodel:${quizViewModel.currentIndex}")
 
@@ -75,6 +78,7 @@ class MainActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt(KEY_INDEX, quizViewModel.currentIndex)
+        outState.putBoolean(KEY_CHEATER,quizViewModel.isCheater)
     }
 
     private fun checkAnswer(answer: Boolean) {
@@ -108,6 +112,7 @@ class MainActivity : AppCompatActivity() {
 
 
 }
+
 
 
 
