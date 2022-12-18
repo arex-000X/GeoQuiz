@@ -27,13 +27,7 @@ class MainActivity : AppCompatActivity() {
     private val quizViewModel: QuizViewModel by lazy {
         ViewModelProvider(this).get(QuizViewModel::class.java)
     }
-    val launcher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
 
-            if(result.resultCode == RESULT_OK){
-                quizViewModel.isCheater = result.data?.getBooleanExtra(EXTRA_ANSWER_SHOW,false) ?: false
-            } else return@registerForActivityResult
-        }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -104,6 +98,13 @@ class MainActivity : AppCompatActivity() {
         quizViewModel.clickNext()
         questionTextView.setText(quizViewModel.questionTextViewRes)
     }
+
+    val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+
+            if(result.resultCode == RESULT_OK){
+                quizViewModel.isCheater = result.data?.getBooleanExtra(EXTRA_ANSWER_SHOW,false) ?: false
+            } else return@registerForActivityResult
+        }
 
 
 }
