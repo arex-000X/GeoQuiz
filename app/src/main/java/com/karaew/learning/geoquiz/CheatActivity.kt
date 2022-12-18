@@ -31,17 +31,7 @@ class CheatActivity : AppCompatActivity() {
             setShowAnswer(true)
 
         }
-
-
     }
-
-    fun checkCheats(questionId: Int, checkResult: Boolean) {
-
-
-        Log.d(EXTRS_ANSWER_TRUE, "Ответ $questionId $checkResult")
-
-    }
-
 
     fun setShowAnswer(isAnswerShow: Boolean) {
         val data = Intent().apply {

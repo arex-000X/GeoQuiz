@@ -3,6 +3,7 @@ package com.karaew.learning.geoquiz
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -26,14 +27,13 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d(TAG, "onCreate(Bundle?) called")
         setContentView(R.layout.activity_main)
 
         val currentIndex = savedInstanceState?.getInt(KEY_INDEX, 0) ?: 0
-        val isCheater =  savedInstanceState?.getBoolean(KEY_CHEATER,false) ?:false
+        val isCheater = savedInstanceState?.getBoolean(KEY_CHEATER, false) ?: false
         quizViewModel.isCheater = isCheater
         quizViewModel.currentIndex = currentIndex
         Log.d(TAG, "activity:${currentIndex}, and viewmodel:${quizViewModel.currentIndex}")
@@ -60,10 +60,11 @@ class MainActivity : AppCompatActivity() {
             btnBack()
         }
         buttonCheat.setOnClickListener {
-          btnCheat()
+            btnCheat()
         }
         questionTextView.setOnClickListener {
             btnNext()
+
         }
 
 
@@ -72,10 +73,11 @@ class MainActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt(KEY_INDEX, quizViewModel.currentIndex)
-        outState.putBoolean(KEY_CHEATER,quizViewModel.isCheater)
+        outState.putBoolean(KEY_CHEATER, quizViewModel.isCheater)
     }
 
     private fun checkAnswer(answer: Boolean) {
+
         val correctAnswer = quizViewModel.questionAnswerViewRes
         val messageResId = when {
             quizViewModel.isCheater -> R.string.judment_toast
@@ -96,24 +98,24 @@ class MainActivity : AppCompatActivity() {
         quizViewModel.clickNext()
         questionTextView.setText(quizViewModel.questionTextViewRes)
     }
-    private fun  btnCheat(){
+
+    private fun btnCheat() {
         val answerTrue = quizViewModel.questionAnswerViewRes
         val intent = CheatActivity.newIntent(this@MainActivity, answerTrue)
         launcher.launch(intent)
     }
 
-    val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-
-            if(result.resultCode == RESULT_OK){
-                quizViewModel.isCheater = result.data?.getBooleanExtra(EXTRA_ANSWER_SHOW,false) ?: false
+    val launcher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            if (result.resultCode == RESULT_OK) {
+                quizViewModel.isCheater =
+                    result.data?.getBooleanExtra(EXTRA_ANSWER_SHOW, false) ?: false
             } else return@registerForActivityResult
         }
-
-
-
-
-
 }
+
+
+
 
 
 
