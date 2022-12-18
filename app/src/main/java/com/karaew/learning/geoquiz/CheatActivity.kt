@@ -22,7 +22,6 @@ class CheatActivity : AppCompatActivity() {
         answerTextView = findViewById(R.id.answer_text)
         buttonShowAnswer = findViewById(R.id.button_show_answer)
         answerIsTrue = intent.getBooleanExtra(EXTRS_ANSWER_TRUE, false)
-
         buttonShowAnswer.setOnClickListener {
             val answerText = when {
                 answerIsTrue -> R.string.btn_true
@@ -30,8 +29,16 @@ class CheatActivity : AppCompatActivity() {
             }
             answerTextView.setText(answerText)
             setShowAnswer(true)
+
         }
 
+
+    }
+
+    fun checkCheats(questionId: Int, checkResult: Boolean) {
+
+
+        Log.d(EXTRS_ANSWER_TRUE, "Ответ $questionId $checkResult")
 
     }
 

@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 private const val TAG = "QuizViewModel"
 
 class QuizViewModel : ViewModel() {
-
     private val questionBank = listOf(
         Question(R.string.question_australia, true),
         Question(R.string.question_oceans, true),
@@ -31,6 +30,7 @@ class QuizViewModel : ViewModel() {
     fun clickBack() {
         currentIndex = (currentIndex - 1) % questionBank.size
         Log.d(TAG, "Button click Back  List item: ${currentIndex}")
+
     }
 
     fun updateCurrent() {

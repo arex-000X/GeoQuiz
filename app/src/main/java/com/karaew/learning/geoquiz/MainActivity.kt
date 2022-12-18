@@ -1,16 +1,12 @@
 package com.karaew.learning.geoquiz
 
-import android.app.Activity
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
-import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
 
@@ -64,9 +60,7 @@ class MainActivity : AppCompatActivity() {
             btnBack()
         }
         buttonCheat.setOnClickListener {
-            val answerTrue = quizViewModel.questionAnswerViewRes
-            val intent = CheatActivity.newIntent(this@MainActivity, answerTrue)
-            launcher.launch(intent)
+          btnCheat()
         }
         questionTextView.setOnClickListener {
             btnNext()
@@ -102,6 +96,11 @@ class MainActivity : AppCompatActivity() {
         quizViewModel.clickNext()
         questionTextView.setText(quizViewModel.questionTextViewRes)
     }
+    private fun  btnCheat(){
+        val answerTrue = quizViewModel.questionAnswerViewRes
+        val intent = CheatActivity.newIntent(this@MainActivity, answerTrue)
+        launcher.launch(intent)
+    }
 
     val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
 
@@ -109,6 +108,9 @@ class MainActivity : AppCompatActivity() {
                 quizViewModel.isCheater = result.data?.getBooleanExtra(EXTRA_ANSWER_SHOW,false) ?: false
             } else return@registerForActivityResult
         }
+
+
+
 
 
 }
