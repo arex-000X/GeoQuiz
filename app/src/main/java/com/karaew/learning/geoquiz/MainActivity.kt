@@ -26,7 +26,6 @@ class MainActivity : AppCompatActivity() {
         ViewModelProvider(this).get(QuizViewModel::class.java)
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d(TAG, "onCreate(Bundle?) called")
@@ -36,9 +35,6 @@ class MainActivity : AppCompatActivity() {
         val isCheater = savedInstanceState?.getBoolean(KEY_CHEATER, false) ?: false
         quizViewModel.isCheater = isCheater
         quizViewModel.currentIndex = currentIndex
-        Log.d(TAG, "activity:${currentIndex}, and viewmodel:${quizViewModel.currentIndex}")
-
-
         buttonTrue = findViewById(R.id.button_true)
         buttonFalse = findViewById(R.id.button_false)
         buttonNext = findViewById(R.id.button_next)
@@ -54,20 +50,17 @@ class MainActivity : AppCompatActivity() {
             checkAnswer(false)
         }
         buttonNext.setOnClickListener {
-            btnNext()
+            clickButtonController(EnumButtonController.BUTTONNEXT)
         }
         buttonBack.setOnClickListener {
-            btnBack()
+            clickButtonController(EnumButtonController.BUTTONBACK)
         }
         buttonCheat.setOnClickListener {
-            btnCheat()
+            clickButtonController(EnumButtonController.BUTTONCHEAT)
         }
         questionTextView.setOnClickListener {
-            btnNext()
-
+            clickButtonController(EnumButtonController.BUTTONNEXT)
         }
-
-
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -80,7 +73,7 @@ class MainActivity : AppCompatActivity() {
 
         val correctAnswer = quizViewModel.questionAnswerViewRes
         val messageResId = when {
-            quizViewModel.isCheater -> R.string.judment_toast
+            quizViewModel.questionStatusCheck -> R.string.judment_toast
             answer == correctAnswer -> R.string.correct
             else -> R.string.in_correct
         }
@@ -88,39 +81,34 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    private fun clickButtonController(constant: EnumButtonController) = quizViewModel.apply {
+        when (constant) {
+            EnumButtonController.BUTTONNEXT -> {
+                clickNext()
+                questionTextView.setText(questionTextViewRes)
 
-    private fun btnBack() {
-        quizViewModel.clickBack()
-        questionTextView.setText(quizViewModel.questionTextViewRes)
-        quizViewModel.updateCurrent()
-    }
-
-    private fun btnNext() {
-        quizViewModel.clickNext()
-        questionTextView.setText(quizViewModel.questionTextViewRes)
-    }
-
-    private fun btnCheat() {
-        val answerTrue = quizViewModel.questionAnswerViewRes
-        val intent = CheatActivity.newIntent(this@MainActivity, answerTrue)
-        launcher.launch(intent)
+            }
+            EnumButtonController.BUTTONBACK -> {
+                clickBack()
+                questionTextView.setText(questionTextViewRes)
+            }
+            EnumButtonController.BUTTONCHEAT -> {
+                val answerTrue = quizViewModel.questionAnswerViewRes
+                val intent = CheatActivity.newIntent(this@MainActivity, answerTrue)
+                launcher.launch(intent)
+            }
+        }
     }
 
     val launcher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode == RESULT_OK) {
-                quizViewModel.isCheater =
-                    result.data?.getBooleanExtra(EXTRA_ANSWER_SHOW, false) ?: false
+                quizViewModel.apply {
+                    isCheater = result.data?.getBooleanExtra(EXTRA_ANSWER_SHOW, false) ?: false
+                    checkStatus()
+                }
+
+
             }
         }
 }
-
-
-
-
-
-
-
-
-
-
