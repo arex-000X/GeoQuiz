@@ -50,16 +50,17 @@ class MainActivity : AppCompatActivity() {
             checkAnswer(false)
         }
         buttonNext.setOnClickListener {
-            clickButtonController(EnumButtonController.BUTTONNEXT)
+            btnNext()
         }
         buttonBack.setOnClickListener {
-            clickButtonController(EnumButtonController.BUTTONBACK)
+            btnBack()
         }
         buttonCheat.setOnClickListener {
-            clickButtonController(EnumButtonController.BUTTONCHEAT)
+            btnCheat()
         }
         questionTextView.setOnClickListener {
-            clickButtonController(EnumButtonController.BUTTONNEXT)
+            btnNext()
+
         }
     }
 
@@ -81,25 +82,22 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun clickButtonController(constant: EnumButtonController) = quizViewModel.apply {
-        when (constant) {
-            EnumButtonController.BUTTONNEXT -> {
-                clickNext()
-                questionTextView.setText(questionTextViewRes)
 
-            }
-            EnumButtonController.BUTTONBACK -> {
-                clickBack()
-                questionTextView.setText(questionTextViewRes)
-            }
-            EnumButtonController.BUTTONCHEAT -> {
-                val answerTrue = quizViewModel.questionAnswerViewRes
-                val intent = CheatActivity.newIntent(this@MainActivity, answerTrue)
-                launcher.launch(intent)
-            }
-        }
+    private fun btnBack() {
+        quizViewModel.clickBack()
+        questionTextView.setText(quizViewModel.questionTextViewRes)
     }
 
+    private fun btnNext() {
+        quizViewModel.clickNext()
+        questionTextView.setText(quizViewModel.questionTextViewRes)
+    }
+
+    private fun btnCheat() {
+        val answerTrue = quizViewModel.questionAnswerViewRes
+        val intent = CheatActivity.newIntent(this@MainActivity, answerTrue)
+        launcher.launch(intent)
+    }
     val launcher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode == RESULT_OK) {
