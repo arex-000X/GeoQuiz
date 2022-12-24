@@ -80,13 +80,14 @@ class MainActivity : AppCompatActivity() {
 
         val correctAnswer = quizViewModel.questionAnswerViewRes
         val messageResId = when {
-            quizViewModel.questionStatusCheck -> R.string.judment_toast
+            quizViewModel.isCheater -> R.string.judment_toast
             answer == correctAnswer -> R.string.correct
             else -> R.string.in_correct
         }
         Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show()
 
     }
+
 
     private fun btnBack() {
         quizViewModel.clickBack()
@@ -110,11 +111,7 @@ class MainActivity : AppCompatActivity() {
             if (result.resultCode == RESULT_OK) {
                 quizViewModel.isCheater =
                     result.data?.getBooleanExtra(EXTRA_ANSWER_SHOW, false) ?: false
-                quizViewModel.checkStatusCheat()
-                if (quizViewModel.questionStatusCheck == true){
-
-                }
-            } else return@registerForActivityResult
+            }
         }
 }
 

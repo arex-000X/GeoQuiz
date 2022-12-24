@@ -22,30 +22,26 @@ class QuizViewModel : ViewModel() {
         get() = questionBank[currentIndex].answer
     val questionTextViewRes: Int
         get() = questionBank[currentIndex].textResId
-   val questionStatusCheck: Boolean
-    get() = questionBank[currentIndex].statusCheat
 
     fun clickNext() {
         currentIndex = (currentIndex + 1) % questionBank.size
-        Log.d(TAG, "Button click Next   List item: ${currentIndex}")
-        Log.d(TAG, "Button click Next   List item: ${questionBank}")
     }
 
     fun clickBack() {
         currentIndex = (currentIndex - 1) % questionBank.size
-        Log.d(TAG, "Button click Back  List item: ${currentIndex}")
-
     }
 
     fun updateCurrent() {
         if (currentIndex == 0) currentIndex = questionBank.size
     }
-    fun checkStatusCheat(){
-        questionBank[currentIndex].statusCheat = isCheater
-    }
+
 
 
 }
+
+
+
+
 
 
 
