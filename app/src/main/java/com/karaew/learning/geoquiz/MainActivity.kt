@@ -1,5 +1,8 @@
 package com.karaew.learning.geoquiz
 
+import android.annotation.SuppressLint
+import android.app.ActivityOptions
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -15,7 +18,9 @@ private const val TAG = "MainActivity"
 private const val KEY_INDEX = "INDEX"
 private const val KEY_CHEATER = "CHEAT"
 
+
 class MainActivity : AppCompatActivity() {
+
     private lateinit var buttonTrue: Button
     private lateinit var buttonFalse: Button
     private lateinit var buttonNext: Button
@@ -25,7 +30,7 @@ class MainActivity : AppCompatActivity() {
     private val quizViewModel: QuizViewModel by lazy {
         ViewModelProvider(this).get(QuizViewModel::class.java)
     }
-
+@SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d(TAG, "onCreate(Bundle?) called")
@@ -55,8 +60,10 @@ class MainActivity : AppCompatActivity() {
         buttonBack.setOnClickListener {
             btnBack()
         }
-        buttonCheat.setOnClickListener {
+        buttonCheat.setOnClickListener { view ->
+
             btnCheat()
+
         }
         questionTextView.setOnClickListener {
             btnNext()
@@ -86,6 +93,7 @@ class MainActivity : AppCompatActivity() {
     private fun btnBack() {
         quizViewModel.clickBack()
         questionTextView.setText(quizViewModel.questionTextViewRes)
+        quizViewModel.updateQuestion()
     }
 
     private fun btnNext() {
@@ -95,15 +103,24 @@ class MainActivity : AppCompatActivity() {
 
     private fun btnCheat() {
         val answerTrue = quizViewModel.questionAnswerViewRes
-        val intent = CheatActivity.newIntent(this@MainActivity, answerTrue)
-        launcher.launch(intent)
+
+            val intent = CheatActivity.newIntent(this@MainActivity, answerTrue)
+            launcher.launch(intent)
+
+
     }
+
     val launcher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+
             if (result.resultCode == RESULT_OK) {
                 quizViewModel.apply {
-                    isCheater = result.data?.getBooleanExtra(EXTRA_ANSWER_SHOW, false) ?: false
-                    checkStatus()
+                    numberOfAttempts--
+                    if(numberOfAttempts == 0) {
+                        isCheater = result.data?.getBooleanExtra(EXTRA_ANSWER_SHOW, false) ?: false
+
+                        checkStatus()
+                    }
                 }
 
 

@@ -9,7 +9,7 @@ private const val TAG = "QuizViewModel"
 
 
 class QuizViewModel : ViewModel() {
-    var isCheater = false
+
     private val questionBank = listOf(
         Question(R.string.question_australia, true, false),
         Question(R.string.question_oceans, true, false),
@@ -20,6 +20,8 @@ class QuizViewModel : ViewModel() {
     )
 
     var currentIndex = 0
+    var isCheater = false
+    var numberOfAttempts = 3
     val questionAnswerViewRes: Boolean
         get() = questionBank[currentIndex].answer
     val questionTextViewRes: Int
@@ -34,6 +36,10 @@ class QuizViewModel : ViewModel() {
     fun clickBack() {
         currentIndex = (currentIndex  - 1) % questionBank.size
         Log.d(TAG,currentIndex.toString())
+    }
+
+    fun updateQuestion(){
+        if(currentIndex == 0) currentIndex = questionBank.size
     }
 
  fun checkStatus(){
